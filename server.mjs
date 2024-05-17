@@ -6,6 +6,11 @@ import helmet from 'helmet';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import expressStaticGzip from 'express-static-gzip';
+import fs from 'fs';
+
+// Carregar o arquivo JSON
+const rawConfig = fs.readFileSync('keys.json');
+const config = JSON.parse(rawConfig);
 
 // Configurar variáveis de ambiente
 dotenv.config();
