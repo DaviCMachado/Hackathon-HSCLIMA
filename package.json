@@ -1,0 +1,21 @@
+{
+  "name": "hackathon",
+  "version": "1.0.0",
+  "description": "Site para o Hackathon",
+  "main": "server.mjs",
+  "scripts": {
+    "start": "node server.mjs",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.17.1",
+    "express-static-gzip": "^2.1.7",
+    "helmet": "^7.1.0",
+    "morgan": "^1.10.0"
+  },
+  "author": "Davi de Castro Machado",
+  "license": "MIT",
+  "type": "module"
+}
