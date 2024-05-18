@@ -17,10 +17,10 @@ class Conexao:
         cursor = self.conexao.cursor()
         cursor.execute(sql)
 
-    def createTable(self, nameTable: str, fields: dict, other_data: list):
+    def createTable(self, name_table: str, fields: dict, other_data: list):
         cursor = self.conexao.cursor()
         command = "CREATE TABLE %s (%s)" % (
-            nameTable,
+            name_table,
             ','.join([k + ' ' + v for k, v in fields.items()] + (
                 other_data if other_data is not None else []))
         )
@@ -32,6 +32,34 @@ class Conexao:
         cursor.execute(command)
         rows = cursor.fetchall()
         return rows
+
+    def insertStatus(self, cod: int, descricao: str):
+        cursor = self.conexao.cursor()
+        sql = 'INSERT INTO hsclima.Status(cod, descricao) VALUES (%d, "%s");' % (cod, descricao)
+        cursor.execute(sql)
+        self.conexao.commit()
+
+
+    def insertProduto(self, cod: int, nome: str, tipoQtd: str):
+        cursor = self.conexao.cursor()
+        sql = 'INSERT INTO hsclima.Produto(cod, nome, tipoQtd) VALUES(%d, "%s", "%s")' % (cod, nome, tipoQtd)
+        cursor.execute(sql)
+        self.conexao.commit()
+
+    def insertRegiao(self, latitude, longitude, raio, codStatus):
+        cursor = self.conexao.cursor()
+        sql = 'INSERT INTO hsclima.Regiao(latitude, longitude, raio, codStatus) VALUES (%f, %f, %f, %d)' % (
+            latitude, longitude, raio, codStatus
+        )
+        cursor.execute(sql)
+        self.conexao.commit()
+
+    def insertRegiaoProduto(self, codProduto, codRegiao, quantidade):
+        cursor = self.conexao.cursor()
+        sql = 'INSERT INTO hsclima.RegiaoProduto(codProduto, codRegiao, quantidade) VALUES (%d, %d, %f)' % (codProduto, codRegiao, quantidade)
+        cursor.execute(sql)
+        self.conexao.commit()
+
 
 ##fora da class
 def createDatabase():
@@ -46,6 +74,7 @@ def createDatabase():
         conexao.close()
     except Exception as e:
         print(e)
+
 
 def inicializaTabelas():
     conexao = Conexao('localhost', 'root', 'root', 'hsclima')
@@ -90,7 +119,7 @@ def inicializaTabelas():
                 'codStatus':'INT'
             },
             [
-                'PRIMARY KEY (cod)',
+                'PRIMARY KEY AUTO_INCREMENT (cod)',
                 'FOREIGN KEY (codStatus) REFERENCES Status(cod)'
             ]
         )
@@ -114,6 +143,15 @@ def inicializaTabelas():
         print(e)
 
 
+def defineStatus():
+    try:
+        conexao = Conexao('localhost', 'root', 'root', 'hsclima')
+        conexao.insertStatus(1, 'Necessita limpeza')
+        conexao.insertStatus(2, 'Necessita reconstrução')
+        conexao.insertStatus(3, 'Necessita limpeza e reconstrução')
+    except Exception as e:
+        print(e)
 
 createDatabase()
 inicializaTabelas()
+defineStatus()
