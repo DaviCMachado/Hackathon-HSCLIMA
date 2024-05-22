@@ -4,7 +4,7 @@
   "description": "Site para o Hackathon",
   "main": "server.mjs",
   "scripts": {
-    "start": "node server.mjs",
+    "start": "nodemon server.mjs",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
@@ -17,5 +17,8 @@
   },
   "author": "Davi de Castro Machado",
   "license": "MIT",
-  "type": "module"
+  "type": "module",
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
 }

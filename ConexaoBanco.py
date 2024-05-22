@@ -1,9 +1,10 @@
 import mysql.connector
+import json
 
 class Conexao:
     def __init__(self, host, user, password, database):
-        self.user = user
         self.host = host
+        self.user = user
         self.database = database
         self.conexao = mysql.connector.connect(
             host=host,
@@ -152,6 +153,21 @@ def defineStatus():
     except Exception as e:
         print(e)
 
+
+def fetch_data():
+    
+    with open('keys.json', 'r') as json_file:
+        config = json.load(json_file)
+    
+    conexao = Conexao(config['host'], config['user'], config['password'], config['database'])
+
+    rows = conexao.select('*', 'RegiaoProduto')  # Ajuste a consulta conforme necessário
+    data = [{"codRegiao": row[0], "codProduto": row[1], "quantidade": row[2]} for row in rows]
+    
+    with open('data.json', 'w') as json_file:
+        json.dump(data, json_file)
+
 createDatabase()
 inicializaTabelas()
 defineStatus()
+fetch_data()
