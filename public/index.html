@@ -1,13 +1,48 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meu Site Estático</title>
-    <link rel="stylesheet" href="styles.css">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>TESTE M1APA</title>
+
+	<!--css leaflet  -->
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+
+	<style type="text/css">
+		#map {
+			width: 50%;
+			height: 100vh;
+		}
+	</style>
+
 </head>
 <body>
-    <h1>Bem-vindo ao meu site estático!</h1>
-    <script src="script.js"></script>
+	<div id="map"></div>
 </body>
 </html>
+
+
+
+<!-- js leaflet -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script type="script.js"></script>
+<script>
+	var map = L.map('map').setView([-29, -51], 13);
+
+	var planetLayer = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+		}).addTo(map);
+
+	planetLayer.addTo(map)
+
+	let qtd = 0
+	for(let i=0;i<100;i++){
+		let lat = -51 + 0.5 *i
+		var marker = L.marker([-29, lat])
+		qtd = qtd+1
+		var popup = marker.bindPopup(qtd.toString()) //COLOCAR REFERENCIA PARA DADOS DO BANCO
+		marker.addTo(map)
+
+	}
+
+</script>
