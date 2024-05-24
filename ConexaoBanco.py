@@ -1,10 +1,10 @@
 import mysql.connector
-import json
 
 class Conexao:
     def __init__(self, host, user, password, database):
         self.host = host
         self.user = user
+        self.password = password
         self.database = database
         self.conexao = mysql.connector.connect(
             host=host,
@@ -12,11 +12,20 @@ class Conexao:
             password=password,
             database=database
         )
+        self.createDatabase()
 
     def createDatabase(self):
-        sql = "CREATE DATABASE %s " % self.database
-        cursor = self.conexao.cursor()
-        cursor.execute(sql)
+        try:
+            conexao = mysql.connector.connect(
+                host=self.host,
+                user=self.user,
+                password=self.password,
+            )
+            cursor = conexao.cursor()
+            cursor.execute('CREATE DATABASE IF NOT EXISTS {}'.format(self.database))
+            conexao.close()
+        except Exception as e:
+            print(e)
 
     def createTable(self, name_table: str, fields: dict, other_data: list):
         cursor = self.conexao.cursor()
@@ -33,12 +42,18 @@ class Conexao:
         cursor.execute(command)
         rows = cursor.fetchall()
         return rows
-
+    
     def insertStatus(self, cod: int, descricao: str):
         cursor = self.conexao.cursor()
-        sql = 'INSERT INTO hsclima.Status(cod, descricao) VALUES (%d, "%s");' % (cod, descricao)
-        cursor.execute(sql)
-        self.conexao.commit()
+        try:
+            sql = 'INSERT INTO hsclima.Status(cod, descricao) VALUES (%s, %s);'
+            cursor.execute(sql, (cod, descricao))
+            self.conexao.commit()
+        except mysql.connector.IntegrityError as e:
+            if e.errno == 1062:
+                print(f"Registro com chave primária {cod} já existe na tabela 'Status'.")
+            else:
+                print(e)
 
 
     def insertProduto(self, cod: int, nome: str, tipoQtd: str):
@@ -46,14 +61,13 @@ class Conexao:
         sql = 'INSERT INTO hsclima.Produto(cod, nome, tipoQtd) VALUES(%d, "%s", "%s")' % (cod, nome, tipoQtd)
         cursor.execute(sql)
         self.conexao.commit()
-
-    def insertRegiao(self, latitude, longitude, raio, codStatus):
+    
+    def insertRegiao(self, latitude, longitude, raio, codStatus, cod):
         cursor = self.conexao.cursor()
-        sql = 'INSERT INTO hsclima.Regiao(latitude, longitude, raio, codStatus) VALUES (%f, %f, %f, %d)' % (
-            latitude, longitude, raio, codStatus
-        )
-        cursor.execute(sql)
+        sql = 'INSERT INTO hsclima.Regiao(latitude, longitude, raio, codStatus) VALUES (%s, %s, %s, %s, %s)'
+        cursor.execute(sql, (cod, latitude, longitude, raio, codStatus))
         self.conexao.commit()
+
 
     def insertRegiaoProduto(self, codProduto, codRegiao, quantidade):
         cursor = self.conexao.cursor()
@@ -61,113 +75,86 @@ class Conexao:
         cursor.execute(sql)
         self.conexao.commit()
 
+    def inicializaTabelas(self):
+        try:
+            self.createTable(
+                'Status',
+                {
+                    'cod':'INT',
+                    'descricao':'TEXT'
+                },
+                [
+                    'PRIMARY KEY (cod)'
+                ]
+            )
+        except Exception as e:
+            print(e)
 
-##fora da class
-def createDatabase():
-    try:
-        conexao = mysql.connector.connect(
-            host='localhost',
-            user='root',
-            password='root',
-        )
-        cursor = conexao.cursor()
-        cursor.execute('CREATE DATABASE hsclima')
-        conexao.close()
-    except Exception as e:
-        print(e)
+        try:
+            self.createTable(
+                'Produto',
+                {
+                    'cod':'INT',
+                    'nome':'TEXT NOT NULL',
+                    'tipoQtd':'TEXT NOT NULL'
+                },
+                [
+                    'PRIMARY KEY (cod)'
+                ]
+            )
+        except Exception as e:
+            print(e)
 
+        try:
+            self.createTable(
+                'Regiao',
+                {
+                    'cod':'INT',
+                    'latitude':'FLOAT', ## CONFERIR SE É A MELHOR FORMA DE SALVAR COORDS
+                    'longitude':'FLOAT',
+                    'raio':'FLOAT',
+                    'codStatus':'INT'
+                },
+                [
+                    'PRIMARY KEY AUTO_INCREMENT (cod)',
+                    'FOREIGN KEY (codStatus) REFERENCES Status(cod)'
+                ]
+            )
+        except Exception as e:
+            print(e)
 
-def inicializaTabelas():
-    conexao = Conexao('localhost', 'root', 'root', 'hsclima')
-    try:
-        conexao.createTable(
-            'Status',
-            {
-                'cod':'INT',
-                'descricao':'TEXT'
-            },
-            [
-                'PRIMARY KEY (cod)'
-            ]
-        )
-    except Exception as e:
-        print(e)
+        try:
+            self.createTable(
+                'RegiaoProduto',
+                {
+                    'codRegiao':'INT',
+                    'codProduto':'INT',
+                    'quantidade':'FLOAT'
+                },
+                [
+                    'FOREIGN KEY (codRegiao) REFERENCES Regiao(cod)',
+                    'FOREIGN KEY (codProduto) REFERENCES Produto(cod)'
+                ]
+            )
+        except Exception as e:
+            print(e)
 
-    try:
-        conexao.createTable(
-            'Produto',
-            {
-                'cod':'INT',
-                'nome':'TEXT NOT NULL',
-                'tipoQtd':'TEXT NOT NULL'
-            },
-            [
-                'PRIMARY KEY (cod)'
-            ]
-        )
-    except Exception as e:
-        print(e)
+    def defineStatus(self):
+        try:
+            self.insertStatus(1, 'Necessita limpeza')
+            self.insertStatus(2, 'Necessita reconstrução')
+            self.insertStatus(3, 'Necessita limpeza e reconstrução')
+        except Exception as e:
+            print(e)
 
+    def dropAllTables(self):    # usado para testes
+        tables = ['Status', 'Produto', 'Regiao', 'RegiaoProduto']
+        cursor = self.conexao.cursor()
+        try:
+            for table in tables:
+                cursor.execute(f'DROP TABLE IF EXISTS {table};')  
+            self.conexao.commit()
+            print("Todas as tabelas foram excluídas com sucesso.")
+        except Exception as e:
+            print(f"Erro ao excluir tabelas: {e}")
 
-    try:
-        conexao.createTable(
-            'Regiao',
-            {
-                'cod':'INT',
-                'latitude':'FLOAT', ## CONFERIR SE É A MELHOR FORMA DE SALVAR COORDS
-                'longitude':'FLOAT',
-                'raio':'FLOAT',
-                'codStatus':'INT'
-            },
-            [
-                'PRIMARY KEY AUTO_INCREMENT (cod)',
-                'FOREIGN KEY (codStatus) REFERENCES Status(cod)'
-            ]
-        )
-    except Exception as e:
-        print(e)
-
-    try:
-        conexao.createTable(
-            'RegiaoProduto',
-            {
-                'codRegiao':'INT',
-                'codProduto':'INT',
-                'quantidade':'FLOAT'
-            },
-            [
-                'FOREIGN KEY (codRegiao) REFERENCES Regiao(cod)',
-                'FOREIGN KEY (codProduto) REFERENCES Produto(cod)'
-            ]
-        )
-    except Exception as e:
-        print(e)
-
-
-def defineStatus():
-    try:
-        conexao = Conexao('localhost', 'root', 'root', 'hsclima')
-        conexao.insertStatus(1, 'Necessita limpeza')
-        conexao.insertStatus(2, 'Necessita reconstrução')
-        conexao.insertStatus(3, 'Necessita limpeza e reconstrução')
-    except Exception as e:
-        print(e)
-
-
-def fetch_data():
-    
-    with open('keys.json', 'r') as json_file:
-        config = json.load(json_file)
-    
-    conexao = Conexao(config['host'], config['user'], config['password'], config['database'])
-
-    rows = conexao.select('*', 'RegiaoProduto')  # Ajuste a consulta conforme necessário
-    data = [{"codRegiao": row[0], "codProduto": row[1], "quantidade": row[2]} for row in rows]
-    
-    with open('data.json', 'w') as json_file:
-        json.dump(data, json_file)
-
-createDatabase()
-inicializaTabelas()
-defineStatus()
-fetch_data()
