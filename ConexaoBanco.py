@@ -147,6 +147,48 @@ class Conexao:
         except Exception as e:
             print(e)
 
+       # Funções para atualizar registros
+    def updateStatus(self, cod, descricao):
+        cursor = self.conexao.cursor()
+        cursor.execute('UPDATE hsclima.Status SET descricao = %s WHERE cod = %s', (descricao, cod))
+        self.conexao.commit()
+    
+    def updateProduto(self, cod, nome, tipoQtd):
+        cursor = self.conexao.cursor()
+        cursor.execute('UPDATE hsclima.Produto SET nome = %s, tipoQtd = %s WHERE cod = %s', (nome, tipoQtd, cod))
+        self.conexao.commit()
+    
+    def updateRegiao(self, cod, latitude, longitude, raio, codStatus):
+        cursor = self.conexao.cursor()
+        cursor.execute('UPDATE hsclima.Regiao SET latitude = %s, longitude = %s, raio = %s, codStatus = %s WHERE cod = %s', (latitude, longitude, raio, codStatus, cod))
+        self.conexao.commit()
+    
+    def updateRegiaoProduto(self, codProduto, codRegiao, quantidade):
+        cursor = self.conexao.cursor()
+        cursor.execute('UPDATE hsclima.RegiaoProduto SET quantidade = %s WHERE codProduto = %s AND codRegiao = %s', (quantidade, codProduto, codRegiao))
+        self.conexao.commit()
+    
+    # Funções para deletar registros
+    def deleteStatus(self, cod):
+        cursor = self.conexao.cursor()
+        cursor.execute('DELETE FROM hsclima.Status WHERE cod = %s', (cod,))
+        self.conexao.commit()
+    
+    def deleteProduto(self, cod):
+        cursor = self.conexao.cursor()
+        cursor.execute('DELETE FROM hsclima.Produto WHERE cod = %s', (cod,))
+        self.conexao.commit()
+    
+    def deleteRegiao(self, cod):
+        cursor = self.conexao.cursor()
+        cursor.execute('DELETE FROM hsclima.Regiao WHERE cod = %s', (cod,))
+        self.conexao.commit()
+    
+    def deleteRegiaoProduto(self, codProduto, codRegiao):
+        cursor = self.conexao.cursor()
+        cursor.execute('DELETE FROM hsclima.RegiaoProduto WHERE codProduto = %s AND codRegiao = %s', (codProduto, codRegiao))
+        self.conexao.commit()
+
     def dropAllTables(self):    # usado para testes
         tables = ['Status', 'Produto', 'Regiao', 'RegiaoProduto']
         cursor = self.conexao.cursor()
@@ -158,3 +200,23 @@ class Conexao:
         except Exception as e:
             print(f"Erro ao excluir tabelas: {e}")
 
+ # Função para obter registros por código
+    def getStatusByCod(self, cod):
+        cursor = self.conexao.cursor()
+        cursor.execute('SELECT * FROM hsclima.Status WHERE cod = %s', (cod,))
+        return cursor.fetchone()
+    
+    def getProdutoByCod(self, cod):
+        cursor = self.conexao.cursor()
+        cursor.execute('SELECT * FROM hsclima.Produto WHERE cod = %s', (cod,))
+        return cursor.fetchone()
+    
+    def getRegiaoByCod(self, cod):
+        cursor = self.conexao.cursor()
+        cursor.execute('SELECT * FROM hsclima.Regiao WHERE cod = %s', (cod,))
+        return cursor.fetchone()
+    
+    def getRegiaoProdutoByCod(self, codRegiao, codProduto):
+        cursor = self.conexao.cursor()
+        cursor.execute('SELECT * FROM hsclima.RegiaoProduto WHERE codRegiao = %s AND codProduto = %s', (codRegiao, codProduto))
+        return cursor.fetchone()

@@ -72,7 +72,7 @@ app.listen(PORT, () => {
 
 // Função para executar o script Python e atualizar o JSON
 const updateData = () => {
-  exec('python ConexaoBanco.py', (error, stdout, stderr) => {
+  exec('python Fetch.py', (error, stdout, stderr) => {
     if (error) {
       console.error(`Erro ao executar o script Python: ${error.message}`);
       return;
