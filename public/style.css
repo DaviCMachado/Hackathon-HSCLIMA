@@ -26,7 +26,7 @@ body{
 /* /////////////////////////////////////////// NAVBAR //////////////////////////////////////////////// */
 .nav-bar{
     top: 0;
-    background-color: #5e0101;
+    background-color: #015e0a;
     width: 100%;
   }
   .nav-hold{
@@ -39,7 +39,7 @@ body{
     font-weight: 600;
   }
   .nav-logo a{
-    color: #f9f9f9;
+    color:  #5e0101;
   }
   .nav-items{
     float: right
@@ -51,12 +51,12 @@ body{
     margin-left:10px;
   }
   .nav-items li a {
-    color: #f9f9f9;
+    color: #5e0101;
   }
   .nav-items li:hover {
-    background-color:#5e010153;
-    border-left:3px solid #5e010153;
-    border-right:3px solid #5e010153;
+    background-color:#008a0580;
+    border-left:3px solid #008a0580;
+    border-right:3px solid #008a0580;
   }
   .nav-hold{
     overflow:hidden;
@@ -89,9 +89,9 @@ body{
   .nav-open{
     height: auto;
   }
-  /*//////////////////////////////// END NAVBAR //////////////////////////////////////////////////////*/
+/*//////////////////////////////// END NAVBAR //////////////////////////////////////////////////////*/
 #map {
-    margin-top: 50px;
-    width: 80%;
-    height: 90vh;
+    margin-top: 0px;
+    width: 75%;
+    height: 88vh;
 }
