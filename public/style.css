@@ -1,5 +1,97 @@
-body {
-    font-family: Arial, sans-serif;
-    text-align: center;
+/* //////////////////////////////////////  GLOBAL   ///////////////////////////////////////////////// */
+
+@import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,400;0,500;0,600;1,600;1,700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap');
+
+/* ////////////////////////////////////////// GENERAL ////////////////////////////////////////////// */
+* {
+    /*font-family: "Nunito", sans-serif;*/
+    font-family: 'Bree Serif', serif;
+}
+html{
+    height: 100%;
+      min-height: 100%;
+}
+body{
+    background-color: white;
+    color: black;
+    margin-top: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-bottom: 0px;
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+}
+/* /////////////////////////////////////////// NAVBAR //////////////////////////////////////////////// */
+.nav-bar{
+    top: 0;
+    background-color: #5e0101;
+    width: 100%;
+  }
+  .nav-hold{
+    width: 90%;
+  }
+  .nav-logo{
+    float: left;
+    display: block;
+    padding: 30px 0px 20px 20px;
+    font-weight: 600;
+  }
+  .nav-logo a{
+    color: #f9f9f9;
+  }
+  .nav-items{
+    float: right
+  }
+  .nav-items li{
+    display:block;
+    float: left;
+    padding: 10px 20px;
+    margin-left:10px;
+  }
+  .nav-items li a {
+    color: #f9f9f9;
+  }
+  .nav-items li:hover {
+    background-color:#5e010153;
+    border-left:3px solid #5e010153;
+    border-right:3px solid #5e010153;
+  }
+  .nav-hold{
+    overflow:hidden;
+  }
+  .nav-menu{
+    display: none;
+  }
+  /*media Queries*/
+  @media screen and (max-width: 768px){
+    .nav-menu{
+      display: block;
+      float: right;
+      padding: 10px 20px;
+      cursor: pointer;
+      color: #fff;
+    }
+    .nav-items{
+      width: 100%;
+      float: left;
+      height: 0px;
+      padding:0px;
+      margin:0px;
+      
+    }
+    .nav-items li{
+      width: 100%;
+      display: block;
+    }  
+  }
+  .nav-open{
+    height: auto;
+  }
+  /*//////////////////////////////// END NAVBAR //////////////////////////////////////////////////////*/
+#map {
     margin-top: 50px;
+    width: 80%;
+    height: 90vh;
 }

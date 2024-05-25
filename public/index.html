@@ -6,63 +6,32 @@
 	<title>TESTE MAPA</title>
 
 	<!--css leaflet  -->
+    <link rel="stylesheet" type="text/css" href="style.css" media="screen" />
 	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
 
-	<style type="text/css">
-		#map {
-			width: 50%;
-			height: 100vh;
-		}
-	</style>
+    <!-- MENU DE NAVEGAÇÃO -->
+    <nav class="nav-bar">
+        <div class="nav-hold">
+          <div class="nav-logo">
+            <a>HSCLIMA</a>
+          </div>
+          <div class="nav-menu" id="nav">&#9776;</div>
+              <ul class="nav-items">
+            <li><a href="#">MAPA</a>
+            <li><a href="https://www.sosenchentes.rs.gov.br/"> SOS RIO GRANDE DO SUL </a>
+          </ul>
+        </div>
+        <div class="main-content">
+    </nav>
+    <!--END MENU NAVEGAÇÃO -->
 
 </head>
 <body>
 	<div id="map"></div>
 </body>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script src="script.js"></script>
+
 </html>
 
-
-
-<!-- js leaflet -->
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-<script>
-	var map = L.map('map').setView([-29, -51], 13);
-
-	var planetLayer = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-		}).addTo(map);
-
-	planetLayer.addTo(map)
-
-	let qtd = 0
-	for(let i=0;i<100;i++){
-		let lat = -51 + 0.5 *i
-		var marker = L.marker([-29, lat])
-		qtd = qtd+1
-		var popup = marker.bindPopup(qtd.toString()) //COLOCAR REFERENCIA PARA DADOS DO BANCO de dados
-		marker.addTo(map)
-
-
-
-	function fetchData() {
-		fetch('/data')
-			.then(response => response.json())
-			.then(data => {
-				data.forEach(item => {
-					let marker = L.marker([-29 + item.codRegiao * 0.01, -51]);
-					marker.bindPopup(`Produto: ${item.codProduto}, Quantidade: ${item.quantidade}`);
-					marker.addTo(map);
-				});
-			})
-			.catch(error => console.error('Erro ao buscar dados:', error));
-	}
-
-	// Fetch data every 10 seconds
-	fetchData();
-	setInterval(fetchData, 10000);
-
-
-
-	}
-
-</script>
