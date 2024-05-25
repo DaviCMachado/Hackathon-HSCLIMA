@@ -35,6 +35,11 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
+// Rota para a página de formulario
+app.get('/forms', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'formulario.html'));
+});
+
 // Rota para outra página
 app.get('/outra-rota', (req, res) => {
   res.send('Esta é outra rota!');

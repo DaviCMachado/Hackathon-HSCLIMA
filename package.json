@@ -4,7 +4,7 @@
   "description": "Site para o Hackathon",
   "main": "server.mjs",
   "scripts": {
-    "start": "nodemon server.mjs",
+    "start": "npx nodemon server.mjs",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
@@ -19,6 +19,6 @@
   "license": "MIT",
   "type": "module",
   "devDependencies": {
-    "nodemon": "^3.1.0"
+    "nodemon": "^3.1.1"
   }
 }
