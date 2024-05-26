@@ -1,3 +1,5 @@
+/*/////////// SCRIPT MAP //////////////////////////*/ 
+
 // Inicializa o mapa
 var map = L.map('map').setView([-29, -51], 13);
 
@@ -37,3 +39,4 @@ function fetchData() {
 // Fetch data every 10 seconds
 fetchData();
 setInterval(fetchData, 10000);
+/*/////// END MAP //////////*/

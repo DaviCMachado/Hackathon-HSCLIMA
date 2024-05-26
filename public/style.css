@@ -5,8 +5,8 @@
 
 /* ////////////////////////////////////////// GENERAL ////////////////////////////////////////////// */
 * {
-    /*font-family: "Nunito", sans-serif;*/
-    font-family: 'Bree Serif', serif;
+    font-family: "Nunito", sans-serif;
+    
 }
 html{
     height: 100%;
@@ -51,7 +51,7 @@ body{
     margin-left:10px;
   }
   .nav-items li a {
-    color: #5e0101;
+    color: #fff700;
   }
   .nav-items li:hover {
     background-color:#008a0580;
@@ -90,8 +90,16 @@ body{
     height: auto;
   }
 /*//////////////////////////////// END NAVBAR //////////////////////////////////////////////////////*/
-#map {
-    margin-top: 0px;
-    width: 75%;
-    height: 88vh;
+img {
+  max-height:60px;
+  max-width: 60px;
 }
+/*////////////////////////////////// MAPS ///////////////////////////////////////////////////////*/
+#map {
+    display: inline-block;
+    vertical-align: top;
+    margin-top: 0px;
+    width: 100%;
+    height: 87vh;
+}
+/*///////////////////////////////// END MAPS /////////////////////////////////////////////////////*/

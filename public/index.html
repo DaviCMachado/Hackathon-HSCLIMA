@@ -3,8 +3,9 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>TESTE MAPA</title>
+	<title> Hachathon HSCLIMA</title>
 
+  <link rel="icon" href="img/favicon.ico"/>
 	<!--css leaflet  -->
     <link rel="stylesheet" type="text/css" href="style.css" media="screen" />
 	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
@@ -13,12 +14,14 @@
     <nav class="nav-bar">
         <div class="nav-hold">
           <div class="nav-logo">
-            <a id="navbar">HSCLIMA</a>
+            <a id="navbar"><img src="img/bandeir.png" alt="logo"></a>
           </div>
           <div class="nav-menu" id="nav">&#9776;</div>
               <ul class="nav-items">
             <li><a id="navbar" href="http://localhost:3000/forms">MAPA</a>
-            <li><a id="navbar" href="https://www.sosenchentes.rs.gov.br/"> SOS RIO GRANDE DO SUL </a>
+            <li><a id="navbar" href="https://portal.inmet.gov.br/"> PREVISÃO DO TEMPO</a>
+            <li><a id="navbar" href="https://defesacivil.rs.gov.br/avisos-e-alertas">ALERTAS DEFESA CIVIL</a>
+            <li><a id="navbar" href="https://sosenchentes.rs.gov.br/inicial"> SOS RIO GRANDE DO SUL </a>
           </ul>
         </div>
         <div class="main-content">
@@ -28,6 +31,8 @@
 </head>
 <body>
 	<div id="map"></div>
+
+
 </body>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
