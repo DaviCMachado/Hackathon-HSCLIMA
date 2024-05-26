@@ -19,6 +19,12 @@
   "license": "MIT",
   "type": "module",
   "devDependencies": {
+    "@babel/cli": "^7.24.6",
+    "@babel/preset-env": "^7.24.6",
+    "@eslint/js": "^9.3.0",
+    "eslint": "^9.3.0",
+    "globals": "^15.3.0",
+    "jest": "^29.7.0",
     "nodemon": "^3.1.1"
   }
 }

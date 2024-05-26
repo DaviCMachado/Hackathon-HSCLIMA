@@ -23,7 +23,18 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
 
 // Middlewares
-app.use(helmet()); // Usar Helmet para segurança básica
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: ["'self'", "https://unpkg.com"],
+        imgSrc: ["'self'", 'data:', 'https://tile.openstreetmap.org', 'https://unpkg.com']
+      }
+    }
+  })
+);
+
 app.use(cors()); // Habilitar CORS para todas as rotas
 app.use(morgan('dev')); // Configurar o morgan para logar requisições
 
