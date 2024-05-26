@@ -9,9 +9,6 @@ import expressStaticGzip from 'express-static-gzip';
 import fs from 'fs';
 import { exec } from 'child_process';
 
-// Carregar o arquivo JSON
-const rawConfig = fs.readFileSync('keys.json');
-const config = JSON.parse(rawConfig);
 
 // Configurar variáveis de ambiente
 dotenv.config();
@@ -79,10 +76,10 @@ app.use((req, res) => {
 });
 
 // Definir a porta para o servidor
-const PORT = process.env.PORT || 3000;
+const PORT = 3000;
 
 // Iniciar o servidor
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`Servidor rodando na porta ${PORT}`);
 });
 
