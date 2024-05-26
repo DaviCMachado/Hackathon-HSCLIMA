@@ -1,51 +1,5 @@
 {
-    "produtos": [
-        {
-            "cod": 4,
-            "nome": "Novo produto",
-            "tipoQtd": "Tipo novo"
-        },
-        {
-            "cod": 5,
-            "nome": "Novo produto",
-            "tipoQtd": "Tipo novo"
-        },
-        {
-            "cod": 6,
-            "nome": "Novo produto",
-            "tipoQtd": "Tipo novo"
-        },
-        {
-            "cod": 7,
-            "nome": "Novo produto",
-            "tipoQtd": "Tipo novo"
-        },
-        {
-            "cod": 8,
-            "nome": "Novo produto",
-            "tipoQtd": "Tipo novo"
-        },
-        {
-            "cod": 9,
-            "nome": "Novo produto",
-            "tipoQtd": "Tipo novo"
-        },
-        {
-            "cod": 91,
-            "nome": "Novo produto",
-            "tipoQtd": "Tipo novo"
-        },
-        {
-            "cod": 99,
-            "nome": "Novo produto",
-            "tipoQtd": "Tipo novo"
-        },
-        {
-            "cod": 911,
-            "nome": "Novo produto",
-            "tipoQtd": "Tipo novo"
-        }
-    ],
+    "produtos": [],
     "status": [
         {
             "cod": 1,
@@ -58,40 +12,16 @@
         {
             "cod": 3,
             "descricao": "Necessita limpeza e reconstru\u00e7\u00e3o"
-        },
-        {
-            "cod": 5,
-            "descricao": "Novo status"
-        },
-        {
-            "cod": 6,
-            "descricao": "Novo status"
-        },
-        {
-            "cod": 7,
-            "descricao": "Novo status"
-        },
-        {
-            "cod": 8,
-            "descricao": "Novo status"
-        },
-        {
-            "cod": 9,
-            "descricao": "Novo status"
-        },
-        {
-            "cod": 91,
-            "descricao": "Novo status"
-        },
-        {
-            "cod": 99,
-            "descricao": "Novo status"
-        },
-        {
-            "cod": 911,
-            "descricao": "Novo status"
         }
     ],
-    "regioes": [],
+    "regioes": [
+        {
+            "cod": 0,
+            "latitude": -28.9426,
+            "longitude": -51.1496,
+            "raio": 2.0,
+            "codStatus": 3
+        }
+    ],
     "regiao_produto": []
 }

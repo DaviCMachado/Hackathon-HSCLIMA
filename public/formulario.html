@@ -33,16 +33,15 @@
 </body>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-<script src="script.js"></script>
 <script>
-    var map = L.map('map').setView([-29, -51], 13);
+    var map1 = L.map('map').setView([-29, -51], 13);
 
     var planetLayer = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
 
-    map.on('click', function(e) {
-    alert(e.latlng);
+    map1.on('click', function(e) {
+    console.log(e.latlng);
     });
 </script>
 </html>

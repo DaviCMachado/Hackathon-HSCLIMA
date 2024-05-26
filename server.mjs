@@ -101,5 +101,6 @@ const updateData = () => {
   });
 };
 
+
 // Atualizar o JSON a cada 10 segundos
 setInterval(updateData, 10000);
